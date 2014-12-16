@@ -25,7 +25,6 @@ module.exports = {
       // required
       version: '3.0.0',
       // optional
-      debug: true,
       protocol: 'https',
       timeout: 5000
     });
