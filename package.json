@@ -2,7 +2,11 @@
   "name": "github-issue-reports",
   "version": "0.0.1",
   "description": "Generate reports on Github issues.",
-  "main": "index.js",
+  "main": "bin/github-issue-report.js",
+  "preferGlobal": "true",
+  "bin": {
+    "github-issue-report" : "bin/github-issue-reports.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
