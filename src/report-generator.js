@@ -35,7 +35,6 @@ module.exports = {
     });
 
     github.issues.repoIssues({repo: config.repo, user: config.owner, state: 'all'}, function (err, result) {
-      console.log(result[0]);
       var runDate = moment();
 
       var issues = _.map(result, function (issue) {
@@ -62,11 +61,6 @@ module.exports = {
       var closedIssues = _.filter(issues, function (issue) {
         return issue.state === 'closed';
       });
-
-      console.log('====== Open Issues =======');
-      console.log(openIssues);
-      console.log('====== Closed Issues =======');
-      console.log(closedIssues);
 
       var template = jade.compileFile('src/report.jade');
       var context = {
