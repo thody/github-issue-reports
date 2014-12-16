@@ -21,6 +21,8 @@ github.authenticate({
 });
 
 github.issues.repoIssues({repo: config.repo, user: config.owner, state: 'all'}, function (err, result) {
+  var runDate = dateFormat();
+
   var issues = _.map(result, function (issue) {
     return {
       number: issue.number,
@@ -49,7 +51,7 @@ github.issues.repoIssues({repo: config.repo, user: config.owner, state: 'all'}, 
 
 
   var template = jade.compileFile('src/report.jade');
-  var html = template({openIssues: openIssues, closedIssues: closedIssues});
+  var html = template({openIssues: openIssues, closedIssues: closedIssues, runDate: runDate});
 
   fs.writeFile(getReportName(config.repo, config.owner), html, function (err) {
     console.log(err);

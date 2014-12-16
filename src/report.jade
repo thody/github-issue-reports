@@ -1,9 +1,11 @@
 doctype html
 html
     head
-        title my jade template
+        title #{repo} Issue Report
     body
-        h1 Open Issues
+        h1 #{repo} Issue Report
+        p Generated: #{runDate}
+        h2 Open Issues
         table
             thead
                 tr
@@ -15,7 +17,7 @@ html
                         td= val.number
                         td= val.title
 
-        h1 Closed Issues
+        h2 Closed Issues
         table
             thead
                 tr
