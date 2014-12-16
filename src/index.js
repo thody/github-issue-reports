@@ -65,7 +65,7 @@ function getReportName(repo, owner) {
     '_',
     repo,
     '-',
-    dateFormat(new Date(), 'yyyymdd-HHmm'),
+    dateFormat(new Date(), 'yyyymdd-HHMMss'),
     '.html'
   ].join('');
 }
