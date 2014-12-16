@@ -27,7 +27,7 @@ github.issues.repoIssues({repo: config.repo, user: config.owner, state: 'all'}, 
 
   var issues = _.map(result, function (issue) {
     return {
-      url: issue.url,
+      url: issue.html_url,
       number: issue.number,
       title: issue.title,
       createdBy: issue.user.login,
