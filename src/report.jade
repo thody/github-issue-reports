@@ -2,29 +2,35 @@ doctype html
 html
     head
         title #{repo} Issue Report
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css")
     body
-        h1 #{repo} Issue Report
-        p Generated: #{runDate}
-        h2 Open Issues
-        table
-            thead
-                tr
-                    th Number
-                    th Title
-            tbody
-                each val in openIssues
+        div.container
+            h1 #{repo} Issue Report
+            p Generated: #{runDate}
+            h2 Open Issues
+            table.table
+                thead
+                    tr
+                        th Number
+                        th Title
+                        th Tags
+                tbody
+                    each val in openIssues
+                        tr
+                            td= val.number
+                            td: a(href=val.url)= val.title
+                            td= val.labels.join(', ')
+
+            h2 Closed Issues
+            table.table
+                thead
+                    tr
+                        th Number
+                        th Title
+                        th Tags
+                tbody
+                each val in closedIssues
                     tr
                         td= val.number
-                        td= val.title
-
-        h2 Closed Issues
-        table
-            thead
-                tr
-                    th Number
-                    th Title
-            tbody
-            each val in closedIssues
-                tr
-                    td= val.number
-                    td= val.title
+                        td: a(href=val.url)= val.title
+                        td= val.labels.join(', ')

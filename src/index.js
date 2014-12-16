@@ -21,10 +21,12 @@ github.authenticate({
 });
 
 github.issues.repoIssues({repo: config.repo, user: config.owner, state: 'all'}, function (err, result) {
+  console.log(result[0]);
   var runDate = dateFormat();
 
   var issues = _.map(result, function (issue) {
     return {
+      url: issue.url,
       number: issue.number,
       title: issue.title,
       createdBy: issue.user.login,
@@ -32,7 +34,8 @@ github.issues.repoIssues({repo: config.repo, user: config.owner, state: 'all'}, 
       comments: issue.comments,
       closedAt: issue.closed_at,
       body: issue.body,
-      state: issue.state
+      state: issue.state,
+      labels: _.map(issue.labels, function (label) { return label.name; })
     }
   });
 
@@ -51,7 +54,13 @@ github.issues.repoIssues({repo: config.repo, user: config.owner, state: 'all'}, 
 
 
   var template = jade.compileFile('src/report.jade');
-  var html = template({openIssues: openIssues, closedIssues: closedIssues, runDate: runDate});
+  var context = {
+    openIssues: openIssues,
+    closedIssues: closedIssues,
+    runDate: runDate,
+    repo: config.repo
+  };
+  var html = template(context);
 
   fs.writeFile(getReportName(config.repo, config.owner), html, function (err) {
     console.log(err);
