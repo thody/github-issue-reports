@@ -2,6 +2,14 @@
   "name": "github-issue-reports",
   "version": "0.0.1",
   "description": "Generate reports on Github issues.",
+  "homepage": "https://github.com/thody/github-issue-reports",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:thody/github-issue-reports.git"
+  },
+  "bugs": {
+    "url": "https://github.com/thody/github-issue-reports"
+  },
   "main": "bin/github-issue-report.js",
   "preferGlobal": "true",
   "bin": {
