@@ -9,6 +9,7 @@
   "author": "Adam Thody",
   "license": "BSD",
   "dependencies": {
-    "github": "^0.2.3"
+    "github": "^0.2.3",
+    "lodash": "^2.4.1"
   }
 }
