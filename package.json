@@ -19,7 +19,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Adam Thody",
-  "license": "BSD",
+  "license": "MIT",
   "dependencies": {
     "github": "^0.2.3",
     "lodash": "^2.4.1",
