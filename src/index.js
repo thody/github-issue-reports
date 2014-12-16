@@ -1,6 +1,8 @@
 var fs = require('fs');
 var _ = require('lodash');
+var dateFormat = require('dateformat');
 var GitHubApi = require('github');
+var jade = require('jade');
 
 var config = JSON.parse(fs.readFileSync('config.json', "UTF-8"));
 
@@ -18,7 +20,7 @@ github.authenticate({
   token: config.token
 });
 
-github.issues.repoIssues({repo: config.repo, user: config.user, state: 'all'}, function (err, result) {
+github.issues.repoIssues({repo: config.repo, user: config.owner, state: 'all'}, function (err, result) {
   var issues = _.map(result, function (issue) {
     return {
       number: issue.number,
@@ -44,4 +46,24 @@ github.issues.repoIssues({repo: config.repo, user: config.user, state: 'all'}, f
   console.log(openIssues);
   console.log('====== Closed Issues =======');
   console.log(closedIssues);
+
+
+  var template = jade.compileFile('src/report.jade');
+  var html = template({openIssues: openIssues, closedIssues: closedIssues});
+
+  fs.writeFile(getReportName(config.repo, config.owner), html, function (err) {
+    console.log(err);
+  });
 });
+
+function getReportName(repo, owner) {
+  return [
+    'reports/',
+    owner,
+    '_',
+    repo,
+    '-',
+    dateFormat(new Date(), 'yyyymdd-HHmm'),
+    '.html'
+  ].join('');
+}

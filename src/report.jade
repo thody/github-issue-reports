@@ -1,0 +1,28 @@
+doctype html
+html
+    head
+        title my jade template
+    body
+        h1 Open Issues
+        table
+            thead
+                tr
+                    th Number
+                    th Title
+            tbody
+                each val in openIssues
+                    tr
+                        td= val.number
+                        td= val.title
+
+        h1 Closed Issues
+        table
+            thead
+                tr
+                    th Number
+                    th Title
+            tbody
+            each val in closedIssues
+                tr
+                    td= val.number
+                    td= val.title
