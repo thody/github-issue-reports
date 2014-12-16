@@ -1,5 +1,6 @@
 var fs = require('fs');
 var _ = require('lodash');
+var moment = require('moment');
 var dateFormat = require('dateformat');
 var GitHubApi = require('github');
 var jade = require('jade');
@@ -22,7 +23,7 @@ github.authenticate({
 
 github.issues.repoIssues({repo: config.repo, user: config.owner, state: 'all'}, function (err, result) {
   console.log(result[0]);
-  var runDate = dateFormat();
+  var runDate = moment();
 
   var issues = _.map(result, function (issue) {
     return {
@@ -30,9 +31,9 @@ github.issues.repoIssues({repo: config.repo, user: config.owner, state: 'all'}, 
       number: issue.number,
       title: issue.title,
       createdBy: issue.user.login,
-      createdAt: issue.created_at,
+      createdAt: moment(issue.created_at),
       comments: issue.comments,
-      closedAt: issue.closed_at,
+      closedAt: moment(issue.closed_at),
       body: issue.body,
       state: issue.state,
       labels: _.map(issue.labels, function (label) { return label.name; })

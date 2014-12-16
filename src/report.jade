@@ -6,7 +6,7 @@ html
     body
         div.container
             h1 #{repo} Issue Report
-            p Generated: #{runDate}
+            p Generated: #{runDate.format('MMMM Do, YYYY @ h:mm:ss a')}
             h2 Open Issues
             table.table
                 thead
@@ -14,12 +14,14 @@ html
                         th Number
                         th Title
                         th Tags
+                        th Created
                 tbody
-                    each val in openIssues
+                    each issue in openIssues
                         tr
-                            td= val.number
-                            td: a(href=val.url)= val.title
-                            td= val.labels.join(', ')
+                            td= issue.number
+                            td: a(href=issue.url)= issue.title
+                            td= issue.labels.join(', ')
+                            td= issue.createdAt.format('MMMM Do, YYYY')
 
             h2 Closed Issues
             table.table
@@ -28,9 +30,11 @@ html
                         th Number
                         th Title
                         th Tags
+                        th Closed
                 tbody
-                each val in closedIssues
+                each issue in closedIssues
                     tr
-                        td= val.number
-                        td: a(href=val.url)= val.title
-                        td= val.labels.join(', ')
+                        td= issue.number
+                        td: a(href=issue.url)= issue.title
+                        td= issue.labels.join(', ')
+                        td= issue.closedAt.format('MMMM Do, YYYY')
