@@ -1,6 +1,6 @@
 {
   "name": "github-issue-reports",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Generate reports on Github issues.",
   "homepage": "https://github.com/thody/github-issue-reports",
   "repository": {
@@ -13,7 +13,7 @@
   "main": "bin/github-issue-report.js",
   "preferGlobal": "true",
   "bin": {
-    "github-issue-report" : "bin/github-issue-reports.js"
+    "github-issue-report" : "bin/github-issue-report.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
