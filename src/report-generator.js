@@ -1,4 +1,5 @@
 var fs = require('fs');
+var path = require('path');
 var _ = require('lodash');
 var moment = require('moment');
 var dateFormat = require('dateformat');
@@ -59,7 +60,8 @@ module.exports = {
         return issue.state === 'closed';
       });
 
-      var template = jade.compileFile('src/report.jade');
+      var templatePath = path.join(__dirname, 'report.jade');
+      var template = jade.compileFile(templatePath);
       var context = {
         openIssues: openIssues,
         closedIssues: closedIssues,
