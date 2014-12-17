@@ -18,9 +18,7 @@ function getReportName(repo, owner) {
 }
 
 module.exports = {
-  generate: function() {
-    var config = JSON.parse(fs.readFileSync('config.json', "UTF-8"));
-
+  generate: function(config) {
     var github = new GitHubApi({
       // required
       version: '3.0.0',
