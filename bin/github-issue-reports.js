@@ -11,7 +11,6 @@ program
   .option('-t, --token [value]', 'Github API access token')
   .parse(process.argv);
 
-//console.log(program);
 if (!program.owner || !program.repo) {
   program.help();
 

@@ -6,6 +6,6 @@ the status of issues with someone who doesn't have access to your repo, for exam
 ## Getting Started
 
 1. Install `npm install -g github-issue-reports`
-2. Run `github-issue-report -o <owner> -r <repo> [-t <access token>]` (access token is required to access private repos)
+2. Run `github-issue-reports -o <owner> -r <repo> [-t <access token>]` (access token is required to access private repos)
 
 [Creating an access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/)
