@@ -7,7 +7,8 @@ html
         div.container
             h1 #{repo} Issue Report
             p Generated: #{runDate.format('MMMM Do, YYYY @ h:mm:ss a')}
-            h2 Open Issues (#{openIssues.length})
+            h2 Open Issues&nbsp;
+                small (#{openIssues.length})
             table.table.table-condensed.table-striped
                 thead
                     tr
@@ -23,7 +24,8 @@ html
                             td= issue.labels.join(', ')
                             td= issue.createdAt.format('MMMM Do, YYYY')
 
-            h2 Closed Issues (#{closedIssues.length})
+            h2 Closed Issues&nbsp;
+                small (#{closedIssues.length})
             table.table.table-condensed.table-striped
                 thead
                     tr
