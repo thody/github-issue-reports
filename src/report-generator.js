@@ -7,7 +7,6 @@ var jade = require('jade');
 
 function getReportName(repo, owner) {
   return [
-    'reports/',
     owner,
     '_',
     repo,

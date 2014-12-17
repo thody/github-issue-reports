@@ -1,6 +1,9 @@
 Github Issue Report Generator
 =============================
 
+This simple little tool generates a static HTML report of issues for a Github repo. This is useful if you want to share
+the status of issues with someone who doesn't have access to your repo, for example.
+
 ## Getting Started
 
 1. Install `npm install -g github-issue-reports`
