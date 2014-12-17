@@ -3,8 +3,10 @@ var path = require('path');
 var _ = require('lodash');
 var moment = require('moment');
 var dateFormat = require('dateformat');
-var GitHubApi = require('github');
 var jade = require('jade');
+var rp = require('request-promise');
+var base64 = require('base64');
+var Buffer = require('buffer').Buffer;
 
 function getReportName(repo, owner) {
   return [
@@ -17,67 +19,75 @@ function getReportName(repo, owner) {
   ].join('');
 }
 
+function generateAuthorization(token) {
+  return 'Basic ' + base64.encode(new Buffer(token + ':x-oauth-basic'));
+}
+
 module.exports = {
-  generate: function(config) {
-    var github = new GitHubApi({
-      // required
-      version: '3.0.0',
-      // optional
-      protocol: 'https',
-      timeout: 5000
-    });
+  generate: function (config) {
 
-    github.authenticate({
-      type: 'token',
-      token: config.token
-    });
+    var options = {
+      uri: 'https://api.github.com/repos/' + config.owner + '/' + config.repo + '/issues',
+      headers: {
+        'User-Agent': 'github-issue-reports'
+      }
+    };
 
-    github.issues.repoIssues({repo: config.repo, user: config.owner, state: 'all'}, function (err, result) {
-      var runDate = moment();
+    if (config.token) {
+      options.headers['Authorization'] = generateAuthorization(config.token);
+    }
 
-      var issues = _.map(result, function (issue) {
-        return {
-          url: issue.html_url,
-          number: issue.number,
-          title: issue.title,
-          createdBy: issue.user.login,
-          createdAt: moment(issue.created_at),
-          comments: issue.comments,
-          closedAt: moment(issue.closed_at),
-          body: issue.body,
-          state: issue.state,
-          labels: _.map(issue.labels, function (label) {
-            return label.name;
-          })
-        }
+    rp(options)
+      .then(function (result) {
+        var issueList = JSON.parse(result);
+        var runDate = moment();
+
+        var issues = _.map(issueList, function (issue) {
+          return {
+            url: issue.html_url,
+            number: issue.number,
+            title: issue.title,
+            createdBy: issue.user.login,
+            createdAt: moment(issue.created_at),
+            comments: issue.comments,
+            closedAt: moment(issue.closed_at),
+            body: issue.body,
+            state: issue.state,
+            labels: _.map(issue.labels, function (label) {
+              return label.name;
+            })
+          }
+        });
+
+        var openIssues = _.filter(issues, function (issue) {
+          return issue.state === 'open';
+        });
+
+        var closedIssues = _.filter(issues, function (issue) {
+          return issue.state === 'closed';
+        });
+
+        var templatePath = path.join(__dirname, 'report.jade');
+        var template = jade.compileFile(templatePath);
+        var context = {
+          openIssues: openIssues,
+          closedIssues: closedIssues,
+          runDate: runDate,
+          repo: config.repo
+        };
+        var html = template(context);
+
+        var fileName = getReportName(config.repo, config.owner);
+        fs.writeFile(fileName, html, function (err) {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log('Generated issue report %s', fileName);
+          }
+        });
+      })
+      .catch(function (reason) {
+        console.log(reason);
       });
-
-      var openIssues = _.filter(issues, function (issue) {
-        return issue.state === 'open';
-      });
-
-      var closedIssues = _.filter(issues, function (issue) {
-        return issue.state === 'closed';
-      });
-
-      var templatePath = path.join(__dirname, 'report.jade');
-      var template = jade.compileFile(templatePath);
-      var context = {
-        openIssues: openIssues,
-        closedIssues: closedIssues,
-        runDate: runDate,
-        repo: config.repo
-      };
-      var html = template(context);
-
-      var fileName = getReportName(config.repo, config.owner);
-      fs.writeFile(fileName, html, function (err) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log('Generated issue report %s', fileName);
-        }
-      });
-    });
   }
 };
