@@ -1,5 +1,4 @@
-Github Issue Report Generator
-=============================
+## Purpose
 
 This simple little tool generates a static HTML report of issues for a Github repo. This is useful if you want to share
 the status of issues with someone who doesn't have access to your repo, for example.
