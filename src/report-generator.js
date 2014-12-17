@@ -68,8 +68,13 @@ module.exports = {
       };
       var html = template(context);
 
-      fs.writeFile(getReportName(config.repo, config.owner), html, function (err) {
-        console.log(err);
+      var fileName = getReportName(config.repo, config.owner);
+      fs.writeFile(fileName, html, function (err) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('Generated issue report %s', fileName);
+        }
       });
     });
   }
