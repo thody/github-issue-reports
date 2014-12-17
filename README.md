@@ -9,3 +9,7 @@ the status of issues with someone who doesn't have access to your repo, for exam
 2. Run `github-issue-reports -o <owner> -r <repo> [-t <access token>]` (access token is required to access private repos)
 
 [Creating an access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/)
+
+## Sample Report
+
+![Sample Report](report-sample.png)
