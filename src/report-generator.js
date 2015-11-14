@@ -5,7 +5,6 @@ var moment = require('moment');
 var dateFormat = require('dateformat');
 var jade = require('jade');
 var rp = require('request-promise');
-var base64 = require('base64');
 var Buffer = require('buffer').Buffer;
 
 function getReportName(repo, owner) {
@@ -20,7 +19,7 @@ function getReportName(repo, owner) {
 }
 
 function generateAuthorization(token) {
-  return 'Basic ' + base64.encode(new Buffer(token + ':x-oauth-basic'));
+  return 'Basic ' + new Buffer(token + ':x-oauth-basic').toString('base64');
 }
 
 module.exports = {
