@@ -13,7 +13,7 @@
   "main": "bin/github-issue-reports.js",
   "preferGlobal": "true",
   "bin": {
-    "github-issue-report": "bin/github-issue-reports.js"
+    "github-issue-reports": "bin/github-issue-reports.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
