@@ -1,6 +1,6 @@
 {
   "name": "github-issue-reports",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Generate reports on Github issues.",
   "homepage": "https://github.com/thody/github-issue-reports",
   "repository": {
